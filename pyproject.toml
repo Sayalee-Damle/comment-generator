@@ -22,6 +22,7 @@ together = "^0.2.8"
 chainlit = "^0.7.301"
 pylint = "^3.0.2"
 openpyxl = "^3.1.2"
+sseclient = "^0.0.27"
 
 
 

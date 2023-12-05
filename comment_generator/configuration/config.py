@@ -2,6 +2,8 @@ from langchain.llms import Together
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from langchain.chat_models import ChatOpenAI
+
 
 
 from comment_generator.configuration.log_factory import logger
@@ -52,19 +54,22 @@ class Config:
         "WizardLM/WizardLM-70B-V1.0"
     ]
 
-    def select_model(self, model_name_val, temperature_val, max_tokens_val, top_k_val):
-            
-        llm = Together(
-            model = model_name_val,
-            temperature= temperature_val,
-            max_tokens= max_tokens_val,
-            top_k= top_k_val,
-            together_api_key= os.getenv("TOGETHER_API_KEY"),
-            top_p = 0.7,
-            repetition_penalty = 1
-        )
-        return llm
+    model_llama = ["togethercomputer/llama-2-70b-chat"]
 
+    model_name = os.getenv("OPENAI_MODEL")
+    llm_cache = os.getenv("LLM_CACHE") == "True"
+    llm = ChatOpenAI(
+        openai_api_key=os.getenv("OPENAI_API_KEY"),
+        model=model_name,
+        temperature=0,
+        request_timeout=os.getenv("REQUEST_TIMEOUT"),
+        cache=llm_cache,
+        streaming=True,
+    )
+    verbose_llm = os.getenv("VERBOSE_LLM") == "True"
+
+    ui_timeout = os.getenv("REQUEST_TIMEOUT")
+            
 
     project_root = Path(os.getenv("PROJECT_ROOT"))
     assert project_root.exists()
