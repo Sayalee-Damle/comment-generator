@@ -12,7 +12,6 @@ def read_prompts_toml() -> dict:
     return read_toml(cfg.project_root / "prompts.toml")
 
 
-
 prompts = read_prompts_toml()
 
 if __name__ == "__main__":

@@ -5,14 +5,13 @@ import os
 from langchain.chat_models import ChatOpenAI
 
 
-
 from comment_generator.configuration.log_factory import logger
 
 
 load_dotenv()
 
-class Config:
 
+class Config:
     model_list = [
         "togethercomputer/alpaca-7b",
         "Austism/chronos-hermes-13b",
@@ -35,7 +34,7 @@ class Config:
         "lmsys/vicuna-13b-v1.5",
         "lmsys/vicuna-7b-v1.5",
         "WizardLM/WizardCoder-15B-V1.0",
-        "WizardLM/WizardLM-70B-V1.0"
+        "WizardLM/WizardLM-70B-V1.0",
     ]
 
     updated_model_list = [
@@ -51,7 +50,7 @@ class Config:
         "lmsys/vicuna-13b-v1.5",
         "lmsys/vicuna-7b-v1.5",
         "WizardLM/WizardCoder-15B-V1.0",
-        "WizardLM/WizardLM-70B-V1.0"
+        "WizardLM/WizardLM-70B-V1.0",
     ]
 
     model_llama = ["togethercomputer/llama-2-70b-chat"]
@@ -69,12 +68,11 @@ class Config:
     verbose_llm = os.getenv("VERBOSE_LLM") == "True"
 
     ui_timeout = os.getenv("REQUEST_TIMEOUT")
-            
 
     project_root = Path(os.getenv("PROJECT_ROOT"))
     assert project_root.exists()
 
-    together_api_key= os.getenv("TOGETHER_API_KEY")
+    together_api_key = os.getenv("TOGETHER_API_KEY")
     ui_timeout = int(os.getenv("UI_TIMEOUT"))
 
     code_output = Path(f"/tmp/togetherai_pylint")
@@ -85,7 +83,7 @@ class Config:
     if not code_comment.exists():
         code_comment.mkdir(exist_ok=True, parents=True)
 
-        
+
 cfg = Config()
 
 if __name__ == "__main__":

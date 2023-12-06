@@ -6,12 +6,11 @@ import together
 from comment_generator.configuration.config import cfg
 
 
-
 def add_comments(model_name, code):
     together.api_key = cfg.together_api_key
-    streamed_output = ''
+    streamed_output = ""
     for output in together.Complete.create_streaming(
-                    prompt = f""" 
+        prompt=f""" 
 # Task Description: 
 Your task is to generate comments for Python functions 
 
@@ -66,37 +65,35 @@ Can you please add comments to all python functions using the reStructuredText D
 ```python
 {code}
 ```
-""", 
-                    
-                    model =  model_name, 
-                    max_tokens = 512,
-                    temperature = 0.1,
-                    top_k = 50,
-                    top_p = 0.7,
-                    repetition_penalty = 1,
-                    stop = ['<human>', '\n\n']
-                    ):
-        
+""",
+        model=model_name,
+        max_tokens=512,
+        temperature=0.1,
+        top_k=50,
+        top_p=0.7,
+        repetition_penalty=1,
+        stop=["<human>", "\n\n"],
+    ):
         streamed_output += output
     d = datetime.datetime.now()
     d = str(d).replace(":", "")
-    d = d.replace(" ","")
+    d = d.replace(" ", "")
     date_now = d[:14]
     print(date_now)
     code_comment = cfg.code_comment
-    index = model_name.find('/') #stores the index of a substring or char
-    model = model_name[index+1:]
-    
+    index = model_name.find("/")  # stores the index of a substring or char
+    model = model_name[index + 1 :]
+
     code_comment_path = pathlib.Path(f"{code_comment}/exec_{date_now}")
     if not code_comment_path.exists():
         code_comment_path.mkdir(exist_ok=True, parents=True)
-    with open(code_comment_path/f"{model}.txt", mode="w") as f:
+    with open(code_comment_path / f"{model}.txt", mode="w") as f:
         f.write("============")
-        f.write('\n')
+        f.write("\n")
         f.write(streamed_output)
-        f.write('\n')
+        f.write("\n")
         f.write("============")
-        f.write('\n')
+        f.write("\n")
     return streamed_output
 
 
@@ -116,6 +113,5 @@ if __name__ == "__main__":
             except Exception as e:
                 logger.exception("error")
                 return str(e)
-        """ 
+        """
         print(add_comments(model, code))
-        
