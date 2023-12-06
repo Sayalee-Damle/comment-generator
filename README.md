@@ -4,9 +4,9 @@
 
 A simple command line tool that you can use to add comments to a Python code base.
 
-## Installation Instruactions
+## Installation Instructions
 
-Please install [Conda][https://conda.io/projects/conda/en/latest/user-guide/getting-started.html] first and then run the following commands:
+Please install [Conda](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) first and then run the following commands:
 
 ```
 conda create -n comment_generator python=3.11
