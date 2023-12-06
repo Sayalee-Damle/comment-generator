@@ -15,3 +15,13 @@ pip install poetry
 poetry install
 ```
 
+## Environment
+
+The project needs a `.env` file in its root folder or you need to have the following environment variables defined:
+
+```
+# Open AI / Model related
+OPENAI_API_KEY=<key>
+# Choose the GPT model
+OPENAI_MODEL=gpt-4-1106-preview
+```
