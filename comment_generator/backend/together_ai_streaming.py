@@ -70,7 +70,6 @@ def comment_code_opensource(code):
 
     prompt = create_prompt(code)
 
-
     payload = {
         "model": model,
         "prompt": prompt,

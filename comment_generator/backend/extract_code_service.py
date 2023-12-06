@@ -21,4 +21,4 @@ def extract_code(text: str, language: str = "python") -> str:
                 text_list.append(text[code_start:i].strip())
                 code_start = -1
 
-    return ' '.join(text_list)
+    return " ".join(text_list)

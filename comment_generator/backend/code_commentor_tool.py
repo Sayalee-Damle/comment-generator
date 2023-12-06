@@ -35,7 +35,6 @@ def document_tool(code):
 def code_commentor(code):
     output = document_tool(code)
     return output
-   
 
 
 if __name__ == "__main__":
