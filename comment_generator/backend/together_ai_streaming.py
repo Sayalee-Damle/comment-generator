@@ -64,21 +64,28 @@ Can you please add comments to all python functions using the reStructuredText D
 """
 
 
-def comment_code_opensource(code):
+def comment_code_opensource(code, model):
     url = "https://api.together.xyz/inference"
-    model = "togethercomputer/llama-2-70b-chat"
+    #model = "togethercomputer/llama-2-70b-chat"
 
-    prompt = create_prompt(code)
 
     payload = {
         "model": model,
-        "prompt": prompt,
-        "max_tokens": 1024,
-        "temperature": 0.7,
+        "max_tokens": 512,
+        "prompt": create_prompt(code),
+        "request_type": "language-model-inference",
+        "temperature": 0,
         "top_p": 0.7,
         "top_k": 50,
         "repetition_penalty": 1,
         "stream_tokens": True,
+        "stop": ["[/INST]", "</s>"],
+        "negative_prompt": "",
+        "sessionKey": "2e59071178ae2b05e68015136fb8045df30c3680",
+        "type": "chat",
+        "prompt_format_string": "[INST]  {prompt}\n [/INST]",
+        "safety_model": "",
+        "repetitive_penalty": 1,
     }
     headers = {
         "accept": "application/json",

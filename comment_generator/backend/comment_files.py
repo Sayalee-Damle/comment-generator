@@ -57,17 +57,17 @@ def get_output(code_commentor_func, code):
     return code_extracted
 
 
-def comment_python_files(source_folder, destination_folder):
+def comment_python_files_gpt(source_folder, destination_folder):
     process_python_files(
         source_folder, destination_folder, lambda code: gpt_tool.code_commentor(code)
     )
 
 
-def comment_python_files_opensource(source_folder, destination_folder):
+def comment_python_files_opensource(source_folder, destination_folder, model):
     process_python_files(
         source_folder,
         destination_folder,
-        lambda code: opensource_tool.comment_code_opensource(code),
+        lambda code: opensource_tool.comment_code_opensource(code, model),
     )
 
 

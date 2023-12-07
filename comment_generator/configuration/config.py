@@ -57,8 +57,9 @@ class Config:
 
     model_name = os.getenv("OPENAI_MODEL")
     llm_cache = os.getenv("LLM_CACHE") == "True"
+    openai_api_key=os.getenv("OPENAI_API_KEY")
     llm = ChatOpenAI(
-        openai_api_key=os.getenv("OPENAI_API_KEY"),
+        openai_api_key=openai_api_key,
         model=model_name,
         temperature=0,
         request_timeout=os.getenv("REQUEST_TIMEOUT"),
