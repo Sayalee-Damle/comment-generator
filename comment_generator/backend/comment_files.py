@@ -8,6 +8,8 @@ import comment_generator.backend.together_ai_streaming as opensource_tool
 import comment_generator.backend.extract_code_service as extract_code
 
 
+
+
 def process_python_files(
     source_folder: str, destination_folder: str, code_commentor_func: Callable
 ):
@@ -22,7 +24,7 @@ def process_python_files(
     # print(dest_dir_path)
     for root, dirs, files in os.walk(dest_dir_path):
         for folder in files:
-            if folder.endswith(".py"):
+            if folder.endswith(".py") or folder.endswith(".java"):
                 if folder == "__init__.py":
                     continue
                 name = root + "\\" + str(folder)
