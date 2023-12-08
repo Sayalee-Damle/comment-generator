@@ -28,6 +28,14 @@ OPENAI_MODEL=gpt-4-1106-preview
 
 ## How to run the application
 
+This is the main entry point of the application
+
+```
+python .\comment_generator\main.py
 ```
 
+For help about the command line parameters, just type:
+
+```
+python .\comment_generator\main.py --help
 ```
