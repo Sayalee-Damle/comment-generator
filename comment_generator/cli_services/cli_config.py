@@ -38,4 +38,4 @@ else:
         "Use TOGETHERAI for this, create an account and generate a key (https://docs.together.ai/docs/get-started)"
     )
     key_model("together-ai")
-    comment.comment_python_files_opensource(src_file_path, dest_file_path, model_to_use)
+    comment.comment_python_files_opensource(src_file_path, dest_file_path)

@@ -3,6 +3,15 @@
 ## Description
 
 A simple command line tool that you can use to add comments to a Python code base.
+It uses AI to generate comments for the code given in.
+It provides this functionality using 2 different AI model options:
+- ChatGPT
+- Llama-2-70b-chat using TogetherAI 
+If the model is unable to put in the comments, the original code is put in with a comment indicating the same.
+The tool does not make changes inplace, it makes a copy of the code base into a folder given by the user. 
+This is done to ensure that the original code stays intact even if the model gives out some abnormality.
+Programming language used: Python
+Command-Line Interface Python Package - Click
 
 ## Installation Instructions
 
@@ -17,13 +26,24 @@ poetry install
 
 ## Environment
 
-The project needs a `.env` file in its root folder or you need to have the following environment variables defined:
+The project needs a `.env` file in its root folder
+To Check the format of the `.env` file, please take a look at the `.env_local` file. Put the parameters in and copy paste it in the `.env` file.
 
+Or you need to have the following environment variables defined:
 ```
-# Open AI / Model related
-OPENAI_API_KEY=<key>
-# Choose the GPT model
-OPENAI_MODEL=gpt-4-1106-preview
+TOGETHER_API_KEY = #togetherAI Key
+TEMPERATURE = 0.1
+MAX_TOKENS = 3000
+TOP_K = 1
+PROJECT_ROOT = #project path
+UI_TIMEOUT = 300
+OPENAI_MODEL = gpt-4-1106-preview
+OPENAI_API_KEY= #openAI key
+CHUNK_SIZE = 1000
+REQUEST_TIMEOUT = 300
+LLM_CACHE = False
+VERBOSE_LLM = True
+TOKEN_LIMIT = 13000
 ```
 
 ## How to run the application
@@ -34,7 +54,7 @@ This is the main entry point of the application
 python .\comment_generator\main.py
 ```
 
-For help about the command line parameters, just type:
+For help about the command line parameters and information, just type:
 
 ```
 python .\comment_generator\main.py --help

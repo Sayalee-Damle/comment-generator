@@ -22,7 +22,7 @@ def process_python_files(
     # print(dest_dir_path)
     for root, dirs, files in os.walk(dest_dir_path):
         for folder in files:
-            if folder.endswith(".py") or folder.endswith(".java"):
+            if folder.endswith(".py"):
                 if folder == "__init__.py":
                     continue
                 name = root + "\\" + str(folder)
@@ -63,11 +63,11 @@ def comment_python_files_gpt(source_folder, destination_folder):
     )
 
 
-def comment_python_files_opensource(source_folder, destination_folder, model):
+def comment_python_files_opensource(source_folder, destination_folder):
     process_python_files(
         source_folder,
         destination_folder,
-        lambda code: opensource_tool.comment_code_opensource(code, model),
+        lambda code: opensource_tool.comment_code_opensource(code),
     )
 
 
