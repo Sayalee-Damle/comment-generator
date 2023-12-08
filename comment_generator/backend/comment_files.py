@@ -8,8 +8,6 @@ import comment_generator.backend.together_ai_streaming as opensource_tool
 import comment_generator.backend.extract_code_service as extract_code
 
 
-
-
 def process_python_files(
     source_folder: str, destination_folder: str, code_commentor_func: Callable
 ):

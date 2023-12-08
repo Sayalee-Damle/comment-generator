@@ -25,3 +25,9 @@ OPENAI_API_KEY=<key>
 # Choose the GPT model
 OPENAI_MODEL=gpt-4-1106-preview
 ```
+
+## How to run the application
+
+```
+
+```
