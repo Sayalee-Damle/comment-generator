@@ -22,13 +22,13 @@ def process_python_files(
     # print(dest_dir_path)
     for root, dirs, files in os.walk(dest_dir_path):
         for folder in files:
-            if folder.endswith(".py"):
-                if folder == "__init__.py":
-                    continue
+            if folder.endswith(".py") or folder.endswith(".java"):
                 name = root + "\\" + str(folder)
                 print(name)
                 f = open(name, "r")
                 code = f.read()
+                if code == "":
+                    continue
                 # print(code)
                 code_extracted = get_output(code_commentor_func, code)
                 if code_extracted == "":
@@ -37,7 +37,10 @@ def process_python_files(
                     print(code_extracted)
                     if code_extracted == "":
                         with open(f"{name}", mode="w") as f:
-                            f.write("## Some error occured in putting comments")
+                            if folder.endswith(".py"):
+                                f.write("## Some error occured in putting comments")
+                            else:
+                                f.write("// Some error occured in putting comments")
                             f.write("\n")
                             f.write(code)
                     else:

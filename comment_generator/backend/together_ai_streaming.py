@@ -8,7 +8,7 @@ from comment_generator.configuration.config import cfg
 def create_prompt(code):
     return f""" 
 # Task Description: 
-Your task is to generate comments for Python functions 
+Your task is to generate comments for functions 
 
 # Example
 Here is an example on how you should do it - 

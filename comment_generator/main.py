@@ -3,6 +3,16 @@ import click
 from comment_generator.configuration.log_factory import logger
 import comment_generator.backend.comment_files as comment
 
+
+
+click.echo("===============================")
+click.echo(f"Welcome to the Comment Generator Tool!", color = False)
+click.echo("===============================")
+click.echo(f"Get your code commented within a few minutes with ease", color = True)
+click.echo("Pre-requisites: Have a togetherAI key for using opensource models or the openAI key for using chatGPT in the .env file", color = True)
+click.echo("Follow the steps from the --help if you need more details (python .\comment_generator\main.py --help)", color = True)
+click.echo("Please provide the details- ", color = True)
+
 @click.command()
 @click.option(
     "--source_folder",
@@ -37,11 +47,14 @@ def comment_generator(source_folder: str, target_folder: str, model_type: str):
     You need to set the API key in the environment variable before using this utility.
 
     \b
-    This tool requires a set on environemnt variable that are typically read from an .env file.
+    This tool requires a set of environment variables that are typically read from an .env file.
     
     \b
     For more information about needed variables please check the .env_local file in our repository: 
     https://github.com/Sayalee-Damle/comment-generator
+
+    \b
+    If you want to change the togetherAI opensource model, go to ./backend/together_ai_streaming.py and change the model.
     
     """
     
@@ -61,6 +74,7 @@ def comment_generator(source_folder: str, target_folder: str, model_type: str):
             comment.comment_python_files_gpt(source_folder, target_folder)
     click.echo("===============================")
     click.echo(f"Please check your commented code in the target folder: {target_folder}")
+    click.echo("===============================")
 
  
 
