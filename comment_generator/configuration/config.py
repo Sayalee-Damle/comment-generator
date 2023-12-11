@@ -84,7 +84,8 @@ class Config:
     if not code_comment.exists():
         code_comment.mkdir(exist_ok=True, parents=True)
 
-
+    window_size = int(os.getenv("MAX_TOKENS"))
+    
 cfg = Config()
 
 if __name__ == "__main__":

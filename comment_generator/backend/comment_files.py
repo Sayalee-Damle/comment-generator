@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import shutil
 from typing import Callable
 
@@ -6,7 +7,8 @@ import comment_generator.backend.code_commentor_tool as gpt_tool
 from comment_generator.configuration.log_factory import logger
 import comment_generator.backend.together_ai_streaming as opensource_tool
 import comment_generator.backend.extract_code_service as extract_code
-
+import comment_generator.cli_services.pylint_services as pylint_services
+import comment_generator.cli_services.format_service as format_service
 
 def process_python_files(
     source_folder: str, destination_folder: str, code_commentor_func: Callable
@@ -44,18 +46,21 @@ def process_python_files(
                             f.write("\n")
                             f.write(code)
                     else:
+                        code_formatted = format_service.format_file(name, code_extracted)
+                        pylint_services.lint_code(name, code_formatted)   
                         with open(f"{name}", mode="w") as f:
-                            f.write(code_extracted)
+                            f.write(code_formatted)
 
                 else:
+                    code_formatted = format_service.format_file(Path(name), code_extracted)
+                    pylint_services.lint_code(Path(name), code_formatted)   
                     with open(f"{name}", mode="w") as f:
-                        f.write(code_extracted)
+                        f.write(code_formatted)
 
 
 def get_output(code_commentor_func, code):
     output = code_commentor_func(code)
     code_extracted = extract_code.extract_code(output)
-    logger.info(code_extracted)
     code_extracted = code_extracted.lstrip(" ")
     return code_extracted
 

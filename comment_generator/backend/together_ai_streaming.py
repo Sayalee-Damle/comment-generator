@@ -57,10 +57,12 @@ def save_text_to_file(text):
 ```
 
 # Instruction
-Can you please add comments to all python functions using the reStructuredText Docstring Format for the following code
+Can you please add comments to all python functions, python classes and package and module docstrings using the reStructuredText Docstring Format for the following code
+
 ```python
 {code}
 ```
+
 """
 
 
@@ -70,7 +72,7 @@ def comment_code_opensource(code):
 
     payload = {
         "model": model,
-        "max_tokens": 512,
+        "max_tokens": cfg.window_size,
         "prompt": create_prompt(code),
         "request_type": "language-model-inference",
         "temperature": 0,
@@ -103,6 +105,7 @@ def comment_code_opensource(code):
 
         partial_result = json.loads(event.data)
         token = partial_result["choices"][0]["text"]
+        print(token, end="", flush=True)
         output += token
     return output
 
