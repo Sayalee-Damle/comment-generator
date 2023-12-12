@@ -70,9 +70,6 @@ class Config:
 
     ui_timeout = os.getenv("REQUEST_TIMEOUT")
 
-    project_root = Path(os.getenv("PROJECT_ROOT"))
-    assert project_root.exists()
-
     together_api_key = os.getenv("TOGETHER_API_KEY")
     ui_timeout = int(os.getenv("UI_TIMEOUT"))
 
@@ -89,4 +86,4 @@ class Config:
 cfg = Config()
 
 if __name__ == "__main__":
-    print(cfg.project_root)
+    print(cfg.ui_timeout)

@@ -33,24 +33,32 @@ def process_python_files(
                 if code == "":
                     continue
                 # print(code)
-                code_extracted = get_output(code_commentor_func, code)
-                if code_extracted == "":
-                    print("in except")
+                try:
                     code_extracted = get_output(code_commentor_func, code)
-                    print(code_extracted)
                     if code_extracted == "":
-                        with open(f"{name}", mode="w") as f:
-                            if folder.endswith(".py"):
-                                f.write("## Some error occured in putting comments")
-                            else:
-                                f.write("// Some error occured in putting comments")
-                            f.write("\n")
-                            f.write(code)
-                    else:
-                        final_code(name, code_extracted)
+                        code_extracted = handle_failure(code_commentor_func, folder, name, code)
+                except:
+                    logger.exception(f"Could not process {name}")
+                    # TODO: eventually copy file to target folder.
 
                 else:
                     final_code(name, code_extracted)
+
+def handle_failure(code_commentor_func, folder, name, code):
+    print("in except")
+    code_extracted = get_output(code_commentor_func, code)
+    print(code_extracted)
+    if code_extracted == "":
+        with open(f"{name}", mode="w") as f:
+            if folder.endswith(".py"):
+                f.write("## Some error occured in putting comments")
+            else:
+                f.write("// Some error occured in putting comments")
+            f.write("\n")
+            f.write(code)
+    else:
+        final_code(name, code_extracted)
+    return code_extracted
 
 
 def final_code(name, code_extracted):

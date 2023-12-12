@@ -9,7 +9,7 @@ def read_toml(file: Path) -> dict:
 
 
 def read_prompts_toml() -> dict:
-    return read_toml(cfg.project_root / "prompts.toml")
+    return read_toml("./prompts.toml")
 
 
 prompts = read_prompts_toml()
