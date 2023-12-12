@@ -25,6 +25,7 @@ openpyxl = "^3.1.2"
 sseclient-py = "^1.8.0"
 black = "^23.11.0"
 click = "^8.1.7"
+toml = "^0.10.2"
 
 
 

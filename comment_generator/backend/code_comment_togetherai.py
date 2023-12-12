@@ -3,7 +3,7 @@ import pathlib
 import uuid
 import together
 
-from comment_generator.configuration.config import cfg
+from comment_generator.config_toml import cfg
 
 
 def add_comments(model_name, code):

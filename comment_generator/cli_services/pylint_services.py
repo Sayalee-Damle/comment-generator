@@ -2,7 +2,7 @@ import datetime
 from pathlib import Path
 
 from pylint.lint.run import Run
-from comment_generator.configuration.config import cfg
+from comment_generator.config_toml import cfg
 
 
 def lint_code(file, code):

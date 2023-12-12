@@ -3,6 +3,7 @@ from pathlib import Path
 import click
 from comment_generator.configuration.log_factory import logger
 import comment_generator.backend.comment_files as comment
+from comment_generator.config_toml import cfg
 
 
 
@@ -69,10 +70,19 @@ def comment_generator(source_folder: str, target_folder: str, model_type: str):
     
     match model_type:
         case "togetherai":
-            comment.comment_python_files_opensource(source_folder, target_folder)
-
+            if cfg.together_api_key != None:
+                
+                comment.comment_python_files_opensource(source_folder, target_folder)
+            else:
+                click.echo("Please add the OpenAI API key in your .env file and restart the code")
+                exit()
+                
         case "openai":
-            comment.comment_python_files_gpt(source_folder, target_folder)
+            if cfg.openai_api_key == None:
+                click.echo("Please add the OpenAI API key in your .env file and restart the code")
+                exit()
+            else:
+                comment.comment_python_files_gpt(source_folder, target_folder)
     click.echo("===============================")
     click.echo(f"Please check your commented code in the target folder: {target_folder}")
     click.echo("===============================")

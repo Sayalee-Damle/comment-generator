@@ -8,7 +8,7 @@ from langchain.prompts.chat import (
 from langchain.chains import LLMChain
 
 from comment_generator.configuration.toml_support import read_prompts_toml
-from comment_generator.configuration.config import cfg
+from comment_generator.config_toml import cfg
 
 prompts = read_prompts_toml()
 

@@ -1,6 +1,6 @@
 from pathlib import Path
 import tomli
-from comment_generator.configuration.config import cfg
+from comment_generator.config_toml import cfg
 
 
 def read_toml(file: Path) -> dict:

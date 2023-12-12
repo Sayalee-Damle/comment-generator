@@ -2,7 +2,7 @@ import json
 import os
 import requests
 import sseclient
-from comment_generator.configuration.config import cfg
+from comment_generator.config_toml import cfg
 
 
 def create_prompt(code):

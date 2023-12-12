@@ -1,0 +1,16 @@
+
+[env]
+    
+        model_name = 'gpt-4-1106-preview'
+        llm_cache = false
+        verbose_llm =  true
+        ui_timeout = 300
+        code_output = "/tmp/togetherai_pylint"
+        code_comment = "/tmp/togetherai_code_comment"
+        window_size = 2475
+        temperature = 0.1
+        chunk_size = 1000
+        token_limit = 13000
+
+
+    

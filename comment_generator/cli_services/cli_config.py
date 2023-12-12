@@ -1,5 +1,5 @@
 import comment_generator.backend.comment_files as comment
-from comment_generator.configuration.config import cfg
+from comment_generator.config_toml import cfg
 import pathlib
 
 
