@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import click
 from comment_generator.configuration.log_factory import logger

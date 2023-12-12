@@ -13,6 +13,7 @@ import comment_generator.cli_services.format_service as format_service
 def process_python_files(
     source_folder: str, destination_folder: str, code_commentor_func: Callable
 ):
+    
     source_dir_path = os.path.realpath(source_folder)
     dest_dir_path = os.path.realpath(destination_folder)
     shutil.copytree(
@@ -46,16 +47,17 @@ def process_python_files(
                             f.write("\n")
                             f.write(code)
                     else:
-                        code_formatted = format_service.format_file(name, code_extracted)
-                        pylint_services.lint_code(name, code_formatted)   
-                        with open(f"{name}", mode="w") as f:
-                            f.write(code_formatted)
+                        final_code(name, code_extracted)
 
                 else:
-                    code_formatted = format_service.format_file(Path(name), code_extracted)
-                    pylint_services.lint_code(Path(name), code_formatted)   
-                    with open(f"{name}", mode="w") as f:
-                        f.write(code_formatted)
+                    final_code(name, code_extracted)
+
+
+def final_code(name, code_extracted):
+    code_formatted = format_service.format_file(Path(name), code_extracted)
+    pylint_services.lint_code(Path(name), code_formatted)   
+    with open(f"{name}", mode="w") as f:
+        f.write(code_formatted)
 
 
 def get_output(code_commentor_func, code):
@@ -77,6 +79,7 @@ def comment_python_files_opensource(source_folder, destination_folder):
         destination_folder,
         lambda code: opensource_tool.comment_code_opensource(code),
     )
+
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ from black import format_str
 from black import Mode
 
 
-def format_file(file, code) -> str:
+def format_file(file: Path, code: str) -> str:
     assert code is not None
     try:
         formatted = format_str(code, mode=Mode())
