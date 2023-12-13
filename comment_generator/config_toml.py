@@ -9,19 +9,18 @@ config = toml.load("./config.toml")
 load_dotenv()
 
 
-
 class Config:
     openai_api_key = os.getenv("OPENAI_API_KEY")
     together_api_key = os.getenv("TOGETHER_API_KEY")
 
     llm = ChatOpenAI(
-            openai_api_key= os.getenv("OPENAI_API_KEY"),
-            model=config["env"]["model_name"],
-            temperature=config["env"]["temperature"],
-            request_timeout=config["env"]["ui_timeout"],
-            cache=config["env"]["llm_cache"],
-            streaming=True,
-        )
+        openai_api_key=os.getenv("OPENAI_API_KEY"),
+        model=config["env"]["model_name"],
+        temperature=config["env"]["temperature"],
+        request_timeout=config["env"]["ui_timeout"],
+        cache=config["env"]["llm_cache"],
+        streaming=True,
+    )
     code_output = Path(config["env"]["code_output"])
     if not code_output.exists():
         code_output.mkdir(exist_ok=True, parents=True)
@@ -31,6 +30,7 @@ class Config:
         code_comment.mkdir(exist_ok=True, parents=True)
 
     window_size = int(config["env"]["window_size"])
+
 
 cfg = Config()
 

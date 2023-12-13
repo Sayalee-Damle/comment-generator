@@ -10,10 +10,10 @@ import comment_generator.backend.extract_code_service as extract_code
 import comment_generator.cli_services.pylint_services as pylint_services
 import comment_generator.cli_services.format_service as format_service
 
+
 def process_python_files(
     source_folder: str, destination_folder: str, code_commentor_func: Callable
 ):
-    
     source_dir_path = os.path.realpath(source_folder)
     dest_dir_path = os.path.realpath(destination_folder)
     shutil.copytree(
@@ -36,24 +36,22 @@ def process_python_files(
                 try:
                     code_extracted = get_output(code_commentor_func, code)
                     if code_extracted == "":
-                        code_extracted = handle_failure(code_commentor_func, folder, name, code)
+                        code_extracted = handle_failure(code_commentor_func, name, code)
                 except:
                     logger.exception(f"Could not process {name}")
-                    # TODO: eventually copy file to target folder.
 
                 else:
                     final_code(name, code_extracted)
 
-def handle_failure(code_commentor_func, folder, name, code):
+
+def handle_failure(code_commentor_func, name, code):
     print("in except")
     code_extracted = get_output(code_commentor_func, code)
     print(code_extracted)
     if code_extracted == "":
         with open(f"{name}", mode="w") as f:
-            if folder.endswith(".py"):
-                f.write("## Some error occured in putting comments")
-            else:
-                f.write("// Some error occured in putting comments")
+            f.write("## Some error occured in putting comments")
+
             f.write("\n")
             f.write(code)
     else:
@@ -63,7 +61,7 @@ def handle_failure(code_commentor_func, folder, name, code):
 
 def final_code(name, code_extracted):
     code_formatted = format_service.format_file(Path(name), code_extracted)
-    pylint_services.lint_code(Path(name), code_formatted)   
+    pylint_services.lint_code(Path(name), code_formatted)
     with open(f"{name}", mode="w") as f:
         f.write(code_formatted)
 
@@ -88,6 +86,47 @@ def comment_python_files_opensource(source_folder, destination_folder):
         lambda code: opensource_tool.comment_code_opensource(code),
     )
 
+
+### Single File computation
+
+
+def comment_single_python_file_process(
+    source_folder, destination_folder, code_commentor_func: Callable
+):
+    source_dir_path = os.path.realpath(source_folder)
+    dest_dir_path = os.path.realpath(destination_folder)
+    shutil.copyfile(
+        source_dir_path,
+        dest_dir_path,
+    )
+
+    f = open(dest_dir_path, "r")
+    code = f.read()
+    if code == "":
+        return
+    try:
+        code_extracted = get_output(code_commentor_func, code)
+        if code_extracted == "":
+            code_extracted = handle_failure(code_commentor_func, dest_dir_path, code)
+    except:
+        logger.exception(f"Could not process {dest_dir_path}")
+
+    else:
+        final_code(dest_dir_path, code_extracted)
+
+
+def comment_single_python_file_gpt(source_folder, destination_folder):
+    comment_single_python_file_process(
+        source_folder, destination_folder, lambda code: gpt_tool.code_commentor(code)
+    )
+
+
+def comment_single_python_file_opensource(source_folder, destination_folder):
+    comment_single_python_file_process(
+        source_folder,
+        destination_folder,
+        lambda code: opensource_tool.comment_code_opensource(code),
+    )
 
 
 if __name__ == "__main__":
