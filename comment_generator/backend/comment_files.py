@@ -44,7 +44,7 @@ def process_python_files(
                     final_code(name, code_extracted)
 
 
-def handle_failure(code_commentor_func, name, code):
+def handle_failure(code_commentor_func: Callable, name: str, code: str) -> str:
     print("in except")
     code_extracted = get_output(code_commentor_func, code)
     print(code_extracted)
@@ -59,27 +59,27 @@ def handle_failure(code_commentor_func, name, code):
     return code_extracted
 
 
-def final_code(name, code_extracted):
+def final_code(name: str, code_extracted: str):
     code_formatted = format_service.format_file(Path(name), code_extracted)
     pylint_services.lint_code(Path(name), code_formatted)
     with open(f"{name}", mode="w") as f:
         f.write(code_formatted)
 
 
-def get_output(code_commentor_func, code):
+def get_output(code_commentor_func: Callable, code: str) -> str:
     output = code_commentor_func(code)
     code_extracted = extract_code.extract_code(output)
     code_extracted = code_extracted.lstrip(" ")
     return code_extracted
 
 
-def comment_python_files_gpt(source_folder, destination_folder):
+def comment_python_files_gpt(source_folder: str, destination_folder: str):
     process_python_files(
         source_folder, destination_folder, lambda code: gpt_tool.code_commentor(code)
     )
 
 
-def comment_python_files_opensource(source_folder, destination_folder):
+def comment_python_files_opensource(source_folder: str, destination_folder: str):
     process_python_files(
         source_folder,
         destination_folder,

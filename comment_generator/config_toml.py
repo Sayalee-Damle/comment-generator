@@ -31,7 +31,7 @@ class Config:
 
     window_size = int(config["env"]["window_size"])
 
-
+    verbose_llm = config["env"]["verbose_llm"]
 cfg = Config()
 
 

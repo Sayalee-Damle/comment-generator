@@ -26,13 +26,13 @@ def prompt_factory():
     return chat_prompt
 
 
-def document_tool(code):
+def document_tool(code: str):
     prompt = prompt_factory()
     chain = LLMChain(llm=cfg.llm, prompt=prompt, verbose=cfg.verbose_llm)
     return chain.run({"code": code})
 
 
-def code_commentor(code):
+def code_commentor(code: str):
     output = document_tool(code)
     return output
 
