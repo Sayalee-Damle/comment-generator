@@ -1,5 +1,5 @@
+from openai import AsyncOpenAI
 import toml
-from langchain.llms import Together
 from pathlib import Path
 from dotenv import load_dotenv
 import os
@@ -29,6 +29,10 @@ class Config:
     window_size = int(config["env"]["window_size"])
 
     verbose_llm = config["env"]["verbose_llm"]
+
+    open_ai_client = AsyncOpenAI(
+        api_key=openai_api_key,
+    )
 cfg = Config()
 
 

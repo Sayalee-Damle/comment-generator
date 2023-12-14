@@ -19,19 +19,29 @@ def get_human_message(code):
     use markdown
     
     """
-def code_commentor(code):
-    open_ai_key = cfg.openai_api_key
-    response = client.chat.completions.create(
-    model=cfg.model_gpt,
-    response_format={"type": "json_object" },
-    messages=[
-        {"role": "system", "content": "You are an expert in understanding the given code and putting comments for it."},
-        {"role": "human", "content": get_human_message(code)}
-    ]
-    )
-    return response.choices[0].message.content
+async def code_commentor(code):
+    stream=False
+    output = ""
+    response = await cfg.open_ai_client.chat.completions.create(
+        model=cfg.model_gpt,
+        messages=[
+            {"role": "system", "content": "You are an expert in understanding the given code and putting comments for it."},
+            {"role": "user", "content": get_human_message(code)}
+        ],
+        stream=stream
+        )
+    if stream:
+        output += str(response)
+        return output
+    choices = response.choices
+    if len(choices) > 0:
+        return choices[0].message.content
+    else:
+        return None
+    
 
 if __name__ == '__main__':
+    import asyncio
     code = """
         def save_text_to_file(text):
             logger.info("in 2nd func")
@@ -45,4 +55,4 @@ if __name__ == '__main__':
                 logger.exception("error")
                 return str(e)
         """
-    code_commentor(code)
+    print(asyncio.run(code_commentor(code)))

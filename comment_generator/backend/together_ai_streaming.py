@@ -66,9 +66,8 @@ Can you please add comments to all python functions, python classes and package 
 """
 
 
-def comment_code_opensource(code):
+def comment_code_opensource(code, model):
     url = "https://api.together.xyz/inference"
-    model = "togethercomputer/llama-2-70b-chat"
 
     payload = {
         "model": model,

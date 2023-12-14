@@ -4,7 +4,7 @@ from typing import List
 def extract_code(text: str, language: str = "python") -> str:
     code_start = -1
     language_len = len(language)
-    text_len = len(text)
+    text_len = len(str(text))
     text_list = []
     delimiter_length = 3
     for i in range(text_len):

@@ -2,11 +2,12 @@ import os
 from pathlib import Path
 import shutil
 from typing import Callable
+import asyncio
 
-import comment_generator.backend.code_commentor_tool as gpt_tool
+import comment_generator.backend.gpt_code_comment as gpt_tool
 from comment_generator.configuration.log_factory import logger
 import comment_generator.backend.together_ai_streaming as opensource_tool
-import comment_generator.backend.extract_code_service as extract_code
+import comment_generator.cli_services.extract_code_service as extract_code
 import comment_generator.cli_services.pylint_services as pylint_services
 import comment_generator.cli_services.format_service as format_service
 
@@ -75,15 +76,15 @@ def get_output(code_commentor_func: Callable, code: str) -> str:
 
 def comment_python_files_gpt(source_folder: str, destination_folder: str):
     process_python_files(
-        source_folder, destination_folder, lambda code: gpt_tool.code_commentor(code)
+        source_folder, destination_folder, lambda code: asyncio.run(gpt_tool.code_commentor(code))
     )
 
 
-def comment_python_files_opensource(source_folder: str, destination_folder: str):
+def comment_python_files_opensource(source_folder: str, destination_folder: str, model: str):
     process_python_files(
         source_folder,
         destination_folder,
-        lambda code: opensource_tool.comment_code_opensource(code),
+        lambda code: opensource_tool.comment_code_opensource(code,model),
     )
 
 
