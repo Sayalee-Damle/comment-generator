@@ -1,4 +1,4 @@
-from pathlib import Path
+"""from pathlib import Path
 from black import format_str
 from black import Mode
 
@@ -22,3 +22,4 @@ if __name__ == "__main__":
     f = open(file, "r")
     code = f.read()
     print(format_file(file, code))
+"""

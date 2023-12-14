@@ -20,7 +20,7 @@ def get_human_message(code):
     
     """
 async def code_commentor(code):
-    stream=False
+    stream=True
     output = ""
     response = await cfg.open_ai_client.chat.completions.create(
         model=cfg.model_gpt,
@@ -31,13 +31,20 @@ async def code_commentor(code):
         stream=stream
         )
     if stream:
-        output += str(response)
+        async for chunk in response:
+            chunk_message = chunk.choices[0].delta  # extract the message
+            if chunk_message.content is not None:
+                message_text = chunk_message.content
+                print(message_text, end = "") 
+                output +=  message_text
         return output
-    choices = response.choices
-    if len(choices) > 0:
-        return choices[0].message.content
     else:
-        return None
+        choices = response.choices
+        if len(choices) > 0:
+            return choices[0].message.content
+        else:
+            return None
+    
     
 
 if __name__ == '__main__':

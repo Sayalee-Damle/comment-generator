@@ -33,6 +33,7 @@ class Config:
     open_ai_client = AsyncOpenAI(
         api_key=openai_api_key,
     )
+    
 cfg = Config()
 
 
