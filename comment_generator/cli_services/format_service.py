@@ -1,16 +1,16 @@
-"""from pathlib import Path
-from black import format_str
-from black import Mode
-
+from pathlib import Path
+#from black import format_str
+#from black import Mode
+from yapf.yapflib.yapf_api import FormatCode 
 
 def format_file(file: Path, code: str) -> str:
     assert code is not None
     try:
-        formatted = format_str(code, mode=Mode())
-        return formatted
+        formatted = FormatCode(code)
+        return formatted[0]
     except Exception as e:
         file_name = file.name
-        temp_file = file.parent / f"{file_name}_black.txt"
+        temp_file = file.parent / f"{file_name}_yapf.txt"
         temp_file.write_text(str(e), encoding="utf-8")
         return code
 
@@ -22,4 +22,3 @@ if __name__ == "__main__":
     f = open(file, "r")
     code = f.read()
     print(format_file(file, code))
-"""

@@ -1,4 +1,4 @@
-import datetime
+
 from pathlib import Path
 
 from pylint.lint.run import Run

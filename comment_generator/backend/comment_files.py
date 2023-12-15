@@ -9,7 +9,7 @@ from comment_generator.configuration.log_factory import logger
 import comment_generator.backend.together_ai_streaming as opensource_tool
 import comment_generator.cli_services.extract_code_service as extract_code
 import comment_generator.cli_services.pylint_services as pylint_services
-#import comment_generator.cli_services.format_service as format_service
+import comment_generator.cli_services.format_service as format_service
 
 
 def process_python_files(
@@ -61,10 +61,10 @@ def handle_failure(code_commentor_func: Callable, name: str, code: str) -> str:
 
 
 def final_code(name: str, code_extracted: str):
-    #code_formatted = format_service.format_file(Path(name), code_extracted)
-    pylint_services.lint_code(Path(name), code_extracted)
+    code_formatted = format_service.format_file(Path(name), code_extracted)
+    pylint_services.lint_code(Path(name), code_formatted)
     with open(f"{name}", mode="w") as f:
-        f.write(code_extracted)
+        f.write(code_formatted)
 
 
 def get_output(code_commentor_func: Callable, code: str) -> str:

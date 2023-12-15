@@ -7,7 +7,7 @@
         ui_timeout = 300
         code_output = "/tmp/togetherai_pylint"
         code_comment = "/tmp/togetherai_code_comment"
-        window_size = 2475
+        window_size = "{\"togethercomputer/llama-2-70b-chat\": 2475, \"mistralai/Mixtral-8x7B-Instruct-v0.1\": 17000}"
         temperature = 0.1
         chunk_size = 1000
         token_limit = 13000

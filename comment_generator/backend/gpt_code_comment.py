@@ -9,7 +9,7 @@ open_ai_key = cfg.openai_api_key
 
 
 
-def get_human_message(code):
+def get_human_message(code: str):
 
     return f"""Given  input is:
     
@@ -19,7 +19,7 @@ def get_human_message(code):
     use markdown
     
     """
-async def code_commentor(code):
+async def code_commentor(code: str):
     stream=True
     output = ""
     response = await cfg.open_ai_client.chat.completions.create(

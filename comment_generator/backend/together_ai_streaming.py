@@ -66,12 +66,12 @@ Can you please add comments to all python functions, python classes and package 
 """
 
 
-def comment_code_opensource(code, model):
+def comment_code_opensource(code: str, model: str):
     url = "https://api.together.xyz/inference"
 
     payload = {
         "model": model,
-        "max_tokens": cfg.window_size,
+        "max_tokens": cfg.window_size.get(model, 1024),
         "prompt": create_prompt(code),
         "request_type": "language-model-inference",
         "temperature": 0,
@@ -127,4 +127,4 @@ def extract_event_ids(events_list: List[dict]) -> List[int]:
 
 """
 
-    print(comment_code_opensource(code))
+    print(comment_code_opensource(code, 'mistralai/Mixtral-8x7B-Instruct-v0.1'))

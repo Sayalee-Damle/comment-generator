@@ -3,6 +3,7 @@ import toml
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import json
 
 config = toml.load("./config.toml")
 load_dotenv()
@@ -26,7 +27,7 @@ class Config:
     if not code_comment.exists():
         code_comment.mkdir(exist_ok=True, parents=True)
 
-    window_size = int(config["env"]["window_size"])
+    window_size = json.loads(config["env"]["window_size"])
 
     verbose_llm = config["env"]["verbose_llm"]
 
