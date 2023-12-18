@@ -21,7 +21,6 @@ together = "^0.2.8"
 pylint = "^3.0.2"
 openpyxl = "^3.1.2"
 sseclient-py = "^1.8.0"
-black = "^23.12.0"
 click = "^8.1.7"
 toml = "^0.10.2"
 mypy = {extras = ["mypyc"], version = "^1.7.1"}
@@ -30,6 +29,9 @@ yapf = "^0.40.2"
 
 
 
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.12.0"
 
 [build-system]
 requires = ["poetry-core"]

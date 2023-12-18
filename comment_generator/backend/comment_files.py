@@ -9,7 +9,7 @@ from comment_generator.configuration.log_factory import logger
 import comment_generator.backend.together_ai_streaming as opensource_tool
 import comment_generator.cli_services.extract_code_service as extract_code
 import comment_generator.cli_services.pylint_services as pylint_services
-import comment_generator.cli_services.format_service as format_service
+#import comment_generator.cli_services.format_service as format_service
 
 
 def process_python_files(
@@ -61,10 +61,10 @@ def handle_failure(code_commentor_func: Callable, name: str, code: str) -> str:
 
 
 def final_code(name: str, code_extracted: str):
-    code_formatted = format_service.format_file(Path(name), code_extracted)
-    pylint_services.lint_code(Path(name), code_formatted)
+    #code_formatted = format_service.format_file(Path(name), code_extracted)
+    pylint_services.lint_code(Path(name), code_extracted)
     with open(f"{name}", mode="w") as f:
-        f.write(code_formatted)
+        f.write(code_extracted)
 
 
 def get_output(code_commentor_func: Callable, code: str) -> str:
@@ -74,17 +74,21 @@ def get_output(code_commentor_func: Callable, code: str) -> str:
     return code_extracted
 
 
-def comment_python_files_gpt(source_folder: str, destination_folder: str):
-    process_python_files(
-        source_folder, destination_folder, lambda code: asyncio.run(gpt_tool.code_commentor(code))
-    )
-
-
-def comment_python_files_opensource(source_folder: str, destination_folder: str, model: str):
+def comment_python_folder_gpt(source_folder: str, destination_folder: str, model: str):
     process_python_files(
         source_folder,
         destination_folder,
-        lambda code: opensource_tool.comment_code_opensource(code,model),
+        lambda code: asyncio.run(gpt_tool.code_commentor(code, model)),
+    )
+
+
+def comment_python_files_opensource(
+    source_folder: str, destination_folder: str, model: str
+):
+    process_python_files(
+        source_folder,
+        destination_folder,
+        lambda code: opensource_tool.comment_code_opensource(code, model),
     )
 
 
@@ -116,17 +120,19 @@ def comment_single_python_file_process(
         final_code(dest_dir_path, code_extracted)
 
 
-def comment_single_python_file_gpt(source_folder, destination_folder):
-    comment_single_python_file_process(
-        source_folder, destination_folder, lambda code: gpt_tool.code_commentor(code)
-    )
-
-
-def comment_single_python_file_opensource(source_folder, destination_folder):
+def comment_single_python_file_gpt(source_folder, destination_folder, model):
     comment_single_python_file_process(
         source_folder,
         destination_folder,
-        lambda code: opensource_tool.comment_code_opensource(code),
+        lambda code: asyncio.run(gpt_tool.code_commentor(code, model)),
+    )
+
+
+def comment_single_python_file_opensource(source_folder, destination_folder, model):
+    comment_single_python_file_process(
+        source_folder,
+        destination_folder,
+        lambda code: opensource_tool.comment_code_opensource(code, model),
     )
 
 
@@ -135,7 +141,8 @@ if __name__ == "__main__":
     dest_file_path = input(
         "Where do you want the commented code directory to be? please give the path of the root folder: "
     )
+    model = "togethercomputer/llama-2-70b-chat"
     # print(comment_python_files_opensource(file_path))
-    print(comment_python_files_opensource(src_file_path, dest_file_path))
+    print(comment_python_files_opensource(src_file_path, dest_file_path, model))
 #   C:\Users\Sayalee\Projects\langchain\image_generator_bot
 #   C:\Users\Sayalee\Projects\commented_projects\image_generator_bot

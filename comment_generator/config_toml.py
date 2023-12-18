@@ -13,11 +13,11 @@ class Config:
     openai_api_key = os.getenv("OPENAI_API_KEY")
     together_api_key = os.getenv("TOGETHER_API_KEY")
 
-    model_gpt=config["env"]["model_name"]
-    temperature=config["env"]["temperature"]
-    request_timeout=config["env"]["ui_timeout"]
-    cache=config["env"]["llm_cache"]
-    streaming=True
+    model_gpt = config["env"]["model_name"]
+    temperature = config["env"]["temperature"]
+    request_timeout = config["env"]["ui_timeout"]
+    cache = config["env"]["llm_cache"]
+    streaming = True
 
     code_output = Path(config["env"]["code_output"])
     if not code_output.exists():
@@ -34,7 +34,8 @@ class Config:
     open_ai_client = AsyncOpenAI(
         api_key=openai_api_key,
     )
-    
+
+
 cfg = Config()
 
 

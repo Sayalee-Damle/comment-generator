@@ -1,5 +1,5 @@
 import json
-import os
+
 import requests
 import sseclient
 from comment_generator.config_toml import cfg
@@ -127,4 +127,4 @@ def extract_event_ids(events_list: List[dict]) -> List[int]:
 
 """
 
-    print(comment_code_opensource(code, 'mistralai/Mixtral-8x7B-Instruct-v0.1'))
+    print(comment_code_opensource(code, "mistralai/Mixtral-8x7B-Instruct-v0.1"))

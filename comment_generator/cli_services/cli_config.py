@@ -32,7 +32,7 @@ if model_to_use == "":
 
 if model_to_use.lower() == "chat-gpt":
     key_model("chat-gpt")
-    comment.comment_python_files_gpt(src_file_path, dest_file_path)
+    comment.comment_python_folder_gpt(src_file_path, dest_file_path)
 else:
     print(
         "Use TOGETHERAI for this, create an account and generate a key (https://docs.together.ai/docs/get-started)"

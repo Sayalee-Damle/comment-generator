@@ -1,7 +1,14 @@
+"""
+Yapf is not being used at this moment because it cannot be compiled into the executable.
+"""
+
+
 from pathlib import Path
-#from black import format_str
-#from black import Mode
-from yapf.yapflib.yapf_api import FormatCode 
+
+# from black import format_str
+# from black import Mode
+from yapf.yapflib.yapf_api import FormatCode
+
 
 def format_file(file: Path, code: str) -> str:
     assert code is not None

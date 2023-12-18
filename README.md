@@ -59,3 +59,23 @@ For help about the command line parameters and information, just type:
 ```
 python .\comment_generator\main.py --help
 ```
+
+## Usage Examples with Python
+Commenting Folders with open source (Mixtral):
+```
+python .\comment_generator\main.py --source_folder  C:\Users\Sayalee\Projects\langchain\image_generator_bot --target_folder C:\Users\Sayalee\Projects\commented_projects\image_generator_bot --model_type mixtral
+```
+Commenting Folders with openai:
+```
+python .\comment_generator\main.py --source_folder  C:\Users\Sayalee\Projects\langchain\image_generator_bot --target_folder C:\Users\Sayalee\Projects\commented_projects\image_generator_bot --model_type chatgpt
+```
+Comment Single file with openai:
+```
+python .\comment_generator\main.py --source_folder C:\Users\Sayalee\Projects\langchain\summarykeywords\summarykeywords\extractkeyword.py --target_folder C:\Users\Sayalee\Projects\commented_projects\extract_keyword --model_type chatgpt
+```
+Comment Single file with open source (Mixtral):
+```
+python .\comment_generator\main.py --source_folder C:\Users\Sayalee\Projects\langchain\summarykeywords\summarykeywords\extractkeyword.py --target_folder C:\Users\Sayalee\Projects\commented_projects\extract_keyword --model_type mixtral
+```
+
+## Usage Examples with Executable

@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import Callable
 import click
 import shutil
 
@@ -35,7 +36,6 @@ click.echo("Please provide the details- ", color=True)
     prompt='Target folder Path (please remove any "s that the path may have)',
     help="Target folder into which the commented code will be copied.",
 )
-
 @click.option(
     "--model_type",
     type=click.Choice(["chatgpt", "llama2", "mixtral"]),
@@ -64,31 +64,23 @@ def comment_generator(source_folder: str, target_folder: str, model_type: str):
 
     """
 
-    logger.info("source_folder: %s", source_folder)
-    logger.info("target_folder: %s", target_folder)
-
-    logger.info("model_type: %s", model_type)
-
     match model_type:
         case "llama2":
-            model = 'togethercomputer/llama-2-70b-chat'
+            model = "togethercomputer/llama-2-70b-chat"
             opensource_model(source_folder, target_folder, model)
         case "mixtral":
-            model = 'mistralai/Mixtral-8x7B-Instruct-v0.1'
+            model = "mistralai/Mixtral-8x7B-Instruct-v0.1"
             opensource_model(source_folder, target_folder, model)
         case "chatgpt":
-            if cfg.openai_api_key != None:
-                if os.path.isfile(source_folder):
-                    comment.comment_single_python_file_gpt(source_folder, target_folder)
-                else:
-                    create_target_folder(target_folder)
-                    comment.comment_python_files_gpt(source_folder, target_folder)
-
-            else:
-                click.echo(
-                    "Please add the OpenAI API key in your .env file and restart the code"
-                )
-                exit()
+            process_formatting(
+                source_folder,
+                target_folder,
+                cfg.model_gpt,
+                comment.comment_single_python_file_gpt,
+                comment.comment_python_folder_gpt,
+                "Please add the OpenAI API key to your .env file and try again",
+                cfg.openai_api_key,
+            )
 
     click.echo("===============================")
     click.echo(
@@ -96,32 +88,49 @@ def comment_generator(source_folder: str, target_folder: str, model_type: str):
     )
     click.echo("===============================")
 
-def opensource_model(source_folder, target_folder, model_type):
-    if cfg.together_api_key != None:
-        if os.path.isfile(source_folder):
-            comment.comment_single_python_file_opensource(
-                        source_folder, target_folder
-                    )
 
-        else:
-            create_target_folder(target_folder)
-            comment.comment_python_files_opensource(
-                        source_folder, target_folder, model_type
-                    )
-
-    else:
-        click.echo(
-                    "Please add the OpenAI API key in your .env file and restart the code"
-                )
-        exit()
+def opensource_model(source_folder: str, target_folder: str, model_type: str):
+    process_formatting(
+        source_folder,
+        target_folder,
+        model_type,
+        comment.comment_single_python_file_opensource,
+        comment.comment_python_files_opensource,
+        "Please add the Together API key to your .env file and try again",
+        cfg.together_api_key,
+    )
 
 
 def create_target_folder(target_folder):
-    click.echo(f"The contents in this {target_folder} will be deleted and replaced", color=True)
+    click.echo(
+        f"The contents in this {target_folder} will be deleted and replaced", color=True
+    )
     target_folder_path = Path(target_folder)
     if target_folder_path.exists():
         shutil.rmtree(target_folder)
     target_folder_path.mkdir(parents=True)
+
+
+def process_formatting(
+    source_folder: str,
+    target_folder: str,
+    model_type: str,
+    handle_single_file: Callable,
+    handle_folder: Callable,
+    error_msg: str,
+    key: str,
+):
+    if key != None:
+        if os.path.isfile(source_folder):
+            handle_single_file(source_folder, target_folder, model_type)
+
+        else:
+            create_target_folder(target_folder)
+            handle_folder(source_folder, target_folder, model_type)
+
+    else:
+        click.echo(error_msg)
+        exit()
 
 
 if __name__ == "__main__":
