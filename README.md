@@ -79,3 +79,34 @@ python .\comment_generator\main.py --source_folder C:\Users\Sayalee\Projects\lan
 ```
 
 ## Usage Examples with Executable
+
+
+## Creating PyInstaller
+
+Please make sure that you install PyInstaller first:
+
+```
+pip install pyinstaller
+```
+
+Please use the following commands to create the Windows executabe:
+
+```ps1
+$PATHS=$env:USERPROFILE + '\anaconda3\envs\comment_generator\Lib\site-packages'
+pyinstaller.exe --onefile --paths=$PATHS ./comment_generator/main.py
+```
+
+After you have created the Windows executable, you can find it in the `dist` folder. When you execute the `main.exe` make sure that there is a `config.toml` file and a `.env` file in the same folder.
+The `.env` file should have these two keys:
+
+```
+TOGETHER_API_KEY = #togetherAI Key
+OPENAI_API_KEY= #openAI key
+```
+
+For convenience you can also just run the build script `build_windows_exe.ps1`. This script will produce a file (`comment_generator.zip`) with the binary and the configuration files.
+
+## Roadmap
+
+- Add in place code commenting only in projects with Git.
+- Add other source models, like OpenChat 3.5
