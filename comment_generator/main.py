@@ -49,7 +49,9 @@ def comment_generator(source_folder: str, target_folder: str, model_type: str):
     Small Python utility with which you can comment your code using either an Open Source model or ChatGPT.
     Please note that you will need to have either an OpenAI key from https://platform.openai.com/ or
     a TogetherAI key from https://www.together.ai/
-
+    \b
+    It works for project folders and single.py files as well
+    \b
     You need to set the API key in the environment variable before using this utility.
 
     \b
