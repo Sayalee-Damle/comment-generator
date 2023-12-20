@@ -65,7 +65,7 @@ def comment_generator(source_folder: str, target_folder: str, model_type: str):
     If you want to change the togetherAI opensource model, go to ./backend/together_ai_streaming.py and change the model.
 
     """
-
+    
     match model_type:
         case "llama2":
             model = "togethercomputer/llama-2-70b-chat"
@@ -122,7 +122,7 @@ def process_formatting(
     error_msg: str,
     key: str,
 ):
-    if key != None:
+    if key != None or (key != '#togetherAI Key') or (key != '#openAI key'):
         if os.path.isfile(source_folder):
             handle_single_file(source_folder, target_folder, model_type)
 
